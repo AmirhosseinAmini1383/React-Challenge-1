@@ -3,10 +3,10 @@ import Table from "../Table/Table";
 
 function AppLayout() {
   return (
-    <>
+    <div>
       <Header />
       <Table />
-    </>
+    </div>
   );
 }
 
