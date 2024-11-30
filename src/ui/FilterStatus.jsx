@@ -1,7 +1,7 @@
-import { useStatusFilter } from "../context/StatusFilterProvider";
+import { useFilter } from "../context/FilterProvider";
 
 function FilterStatus({ options }) {
-  const { filterStatus, setFilterStatus } = useStatusFilter();
+  const { filterStatus, setFilterStatus } = useFilter();
   return (
     <div className="flex items-center text-slate-700">
       <div className="flex items-center bg-white rounded-lg p-1 gap-x-5 border border-gray-200 rtl">

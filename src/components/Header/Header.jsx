@@ -2,6 +2,7 @@ import { useState } from "react";
 import FilterStatus from "../../ui/FilterStatus";
 import Select from "../../ui/Select";
 import { useProjects } from "../../context/ProjectsProvider";
+import { useFilter } from "../../context/FilterProvider";
 
 const statusOptions = [
   {
@@ -47,18 +48,20 @@ const sortOptions = [
 
 function Header() {
   const { data } = useProjects();
-  const [category, setCategory] = useState(1);
-  const [sort, setSort] = useState("created_desc");
+  const { category, setCategory, sort, setSort } = useFilter();
 
-  const uniqueCategories = Array.from(
-    new Set(data.map((project) => JSON.stringify(project.category)))
-  ).map((category) => {
-    const parsedCategory = JSON.parse(category);
-    return {
-      label: parsedCategory.title,
-      value: parsedCategory.id,
-    };
-  });
+  const uniqueCategories = [
+    { label: "انتخاب دسته‌ بندی", value: "" },
+    ...Array.from(
+      new Set(data.map((project) => JSON.stringify(project.category)))
+    ).map((category) => {
+      const parsedCategory = JSON.parse(category);
+      return {
+        label: parsedCategory.title,
+        value: parsedCategory.id,
+      };
+    }),
+  ];
 
   function handleChangeCategory(e) {
     setCategory(e.target.value);
@@ -67,7 +70,7 @@ function Header() {
   function handleChangeSort(e) {
     setSort(e.target.value);
   }
-  
+
   return (
     <div className="mt-10 md:mt-20">
       <div className="flex items-center justify-between">

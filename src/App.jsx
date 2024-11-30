@@ -3,17 +3,17 @@ import "./App.css";
 import Home from "./components/Home/Home";
 import AppLayout from "./components/AppLayout/AppLayout";
 import ProjectsProvider from "./context/ProjectsProvider";
-import StatusFilterProvider from "./context/StatusFilterProvider";
+import FilterProvider from "./context/FilterProvider";
 
 function App() {
   return (
     <ProjectsProvider>
-      <StatusFilterProvider>
+      <FilterProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/app" element={<AppLayout />} />
         </Routes>
-      </StatusFilterProvider>
+      </FilterProvider>
     </ProjectsProvider>
   );
 }
