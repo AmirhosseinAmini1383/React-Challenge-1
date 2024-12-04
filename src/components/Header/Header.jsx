@@ -50,17 +50,24 @@ function Header() {
   const { data } = useProjects();
   const { category, setCategory, sort, setSort } = useFilter();
 
-  const uniqueCategories = [
-    { label: "انتخاب دسته‌ بندی", value: "" },
-    ...Array.from(
-      new Set(data.map((project) => JSON.stringify(project.category)))
-    ).map((category) => {
-      const parsedCategory = JSON.parse(category);
-      return {
-        label: parsedCategory.title,
-        value: parsedCategory.id,
-      };
-    }),
+  const categories = data.map((p) => {
+    return {
+      label: p.category.title,
+      value: p.category.englishTitle,
+    };
+  });
+
+  const filteredCategories = categories.filter(
+    (obj1, index, self) =>
+      self.findIndex((obj2) => obj2.value === obj1.value) === index
+  );
+
+  const transformedCategory = [
+    {
+      value: "ALL",
+      label: "دسته بندی (همه)",
+    },
+    ...filteredCategories,
   ];
 
   function handleChangeCategory(e) {
@@ -74,40 +81,25 @@ function Header() {
   return (
     <div className="mt-10 md:mt-20">
       <div className="flex items-center justify-between">
+        <h1 className="text-right text-slate-700 font-extrabold text-xl">
+          لیست پروژه ها
+        </h1>
         <div className="flex items-center flex-row gap-x-8">
+          <FilterStatus options={statusOptions} />
+          <Select
+            options={transformedCategory}
+            value={category}
+            onChange={handleChangeCategory}
+          />
           <Select
             options={sortOptions}
             value={sort}
             onChange={handleChangeSort}
           />
-          <Select
-            options={uniqueCategories}
-            value={category}
-            onChange={handleChangeCategory}
-          />
-          <FilterStatus options={statusOptions} />
         </div>
-        <h1 className="text-right text-slate-700 font-extrabold text-xl">
-          لیست پروژه ها
-        </h1>
       </div>
     </div>
   );
 }
 
 export default Header;
-
-// function CategorySelection() {
-//   return (
-//     <div className="rtl">
-//       <select name="" id="" className="text-slate-700">
-//         <option value="">دسته بندی همه</option>
-//         <option value="">UI/UX طراحی</option>
-//         <option value="">برنامه نویسی وب</option>
-//         <option value="">سئو</option>
-//         <option value="">برنامه نویسی بک اند</option>
-//         <option value="">برنامه نویس فرانت اند</option>
-//       </select>
-//     </div>
-//   );
-// }

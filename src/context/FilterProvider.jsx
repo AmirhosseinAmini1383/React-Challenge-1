@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const StatusFilterContext = createContext();
 function FilterProvider({ children }) {
   const [filterStatus, setFilterStatus] = useState("ALL");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("ALL");
   const [sort, setSort] = useState("created_desc");
   return (
     <StatusFilterContext.Provider
